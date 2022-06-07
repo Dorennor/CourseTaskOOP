@@ -7,95 +7,77 @@ namespace CourseTaskOOP.DAL.Data;
 
 public class SeedData
 {
-    public static void SeedDevelopers(ModelBuilder modelBuilder)
+    public static void SeedUsers(ModelBuilder modelBuilder)
     {
-        List<Developer> developers = new List<Developer>();
-        string[] positions = new[] { "Backend developer", "Frontend developer", "Tester", "DevOPS", "Architect" };
-        Random random = new Random();
+        List<User> users = new List<User>();
 
-        for (int i = 0; i < 30; i++)
+        for (int i = 1; i <= 30; i++)
         {
-            developers.Add(new Developer
+            users.Add(new User
             {
-                Id = i + 1,
+                Id = i,
+                UserName = Faker.Internet.UserName(),
+                FullName = Faker.Name.FullName(),
+                IsLogged = false,
+                PasswordHash = GeneratePasswordHash($"client{i}"),
+                Role = "Client"
+            });
+        }
+
+        for (int i = 31; i <= 60; i++)
+        {
+            users.Add(new User
+            {
+                Id = i,
                 FullName = Faker.Name.FullName(NameFormats.Standard),
                 UserName = Faker.Internet.UserName(),
-                Position = positions[random.Next(0, positions.Length - 1)],
-                PasswordHash = GeneratePasswordHash($"developer{i + 1}"),
+                Role = "Developer",
+                PasswordHash = GeneratePasswordHash($"developer{i}"),
                 IsLogged = false
             });
         }
 
-        modelBuilder.Entity<Developer>().HasData(developers);
-    }
-
-    public static void SeedClients(ModelBuilder modelBuilder)
-    {
-        List<Client> clients = new List<Client>();
-
-        for (int i = 0; i < 30; i++)
+        users.Add(new User
         {
-            clients.Add(new Client
-            {
-                Id = i + 1,
-                Email = Faker.Internet.Email(),
-                FullName = Faker.Name.FullName(),
-                IsLogged = false,
-                PasswordHash = GeneratePasswordHash($"client{i + 1}")
-            });
-        }
-
-        modelBuilder.Entity<Client>().HasData(clients);
-    }
-
-    public static void SeedAdministrators(ModelBuilder modelBuilder)
-    {
-        List<Administrator> administrators = new List<Administrator>();
-        administrators.Add(new Administrator
-        {
-            Id = 1,
+            Id = 61,
             FullName = "Administrator",
             IsLogged = false,
-            Position = "Administrator",
+            Role = "Administrator",
             UserName = "Administrator",
             PasswordHash = GeneratePasswordHash("administrator")
         });
-        administrators.Add(new Administrator
+
+        users.Add(new User
         {
-            Id = 2,
+            Id = 62,
             FullName = "Admin",
             IsLogged = false,
-            Position = "Admin",
+            Role = "Administrator",
             UserName = "Admin",
             PasswordHash = GeneratePasswordHash("admin")
         });
 
-        modelBuilder.Entity<Administrator>().HasData(administrators);
-    }
-
-    public static void SeedManager(ModelBuilder modelBuilder)
-    {
-        List<Manager> managers = new List<Manager>();
-        managers.Add(new Manager()
+        users.Add(new User
         {
-            Id = 1,
+            Id = 63,
             FullName = "Manager1",
             IsLogged = false,
             PasswordHash = GeneratePasswordHash("manager1"),
-            Position = "Manager",
+            Role = "Manager",
             UserName = "Manager1"
         });
-        managers.Add(new Manager
+
+        users.Add(new User
         {
-            Id = 2,
+            Id = 64,
             FullName = "Manager2",
             IsLogged = false,
             PasswordHash = GeneratePasswordHash("manager2"),
-            Position = "Manager",
+            Role = "Manager",
             UserName = "Manager2"
         });
 
-        modelBuilder.Entity<Manager>().HasData(managers);
+        modelBuilder.Entity<User>().HasData(users);
     }
 
     public static string GeneratePasswordHash(string password)

@@ -1,7 +1,35 @@
 ﻿<Application x:Class="CourseTaskOOP.PL.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="MainWindow.xaml">
+             xmlns:viewModel1="clr-namespace:CourseTaskOOP.PL.UI.ViewModels"
+             xmlns:administratorViews="clr-namespace:CourseTaskOOP.PL.UI.Views.Administrator"
+             xmlns:administratorViewModels="clr-namespace:CourseTaskOOP.PL.UI.ViewModels.Administrator"
+             xmlns:clientViews="clr-namespace:CourseTaskOOP.PL.UI.Views.Client"
+             xmlns:clientViewModels="clr-namespace:CourseTaskOOP.PL.UI.ViewModels.Client">
     <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="UI/Resources/Styles/MenuButtonTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate DataType="{x:Type administratorViewModels:AddUserViewModel}">
+                <administratorViews:AddUserView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type administratorViewModels:EditUserViewModel}">
+                <administratorViews:EditUserView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type administratorViewModels:DeleteUserViewModel}">
+                <administratorViews:DeleteUserView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type clientViewModels:AddOrderViewModel}">
+                <clientViews:AddOrderView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type clientViewModels:EditOrderViewModel}">
+                <clientViews:EditOrderView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type clientViewModels:DeleteOrderViewModel}">
+                <clientViews:DeleteOrderView />
+            </DataTemplate>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

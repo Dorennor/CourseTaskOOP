@@ -1,6 +1,7 @@
 ﻿using CourseTaskOOP.DAL.Data;
 using CourseTaskOOP.DAL.Interfaces;
 using CourseTaskOOP.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 namespace CourseTaskOOP.DAL.Repositories
@@ -14,11 +15,11 @@ namespace CourseTaskOOP.DAL.Repositories
             _dbContext = dbContext;
         }
 
-        public List<TeamMember> GetAll()
+        public async Task<List<TeamMember>?> GetAllAsync()
         {
             try
             {
-                var obj = _dbContext.TeamMembers.ToList();
+                var obj = await _dbContext.TeamMembers.ToListAsync();
                 return obj ?? null;
             }
             catch (Exception e)
@@ -28,13 +29,13 @@ namespace CourseTaskOOP.DAL.Repositories
             }
         }
 
-        public TeamMember GetById(int id)
+        public async Task<TeamMember?> GetByIdAsync(int id)
         {
             try
             {
                 if (id == null) return null;
 
-                var obj = _dbContext.TeamMembers.FirstOrDefault(u => u.Id == id);
+                var obj = await _dbContext.TeamMembers.FirstOrDefaultAsync(u => u.Id == id);
                 return obj ?? null;
             }
             catch (Exception e)
@@ -44,7 +45,7 @@ namespace CourseTaskOOP.DAL.Repositories
             }
         }
 
-        public List<TeamMember> Find(Func<TeamMember, bool> predicate)
+        public async Task<List<TeamMember>> FindAsync(Func<TeamMember, bool> predicate)
         {
             try
             {
@@ -58,13 +59,13 @@ namespace CourseTaskOOP.DAL.Repositories
             }
         }
 
-        public TeamMember Create(TeamMember item)
+        public async Task<TeamMember> CreateAsync(TeamMember item)
         {
             try
             {
                 if (item == null) return null;
-                var obj = _dbContext.TeamMembers.Add(item);
-                _dbContext.SaveChanges();
+                var obj = await _dbContext.TeamMembers.AddAsync(item);
+                await _dbContext.SaveChangesAsync();
                 return obj.Entity;
             }
             catch (Exception e)
@@ -74,13 +75,13 @@ namespace CourseTaskOOP.DAL.Repositories
             }
         }
 
-        public void Update(TeamMember item)
+        public async Task UpdateAsync(TeamMember item)
         {
             try
             {
                 if (item == null) return;
                 var obj = _dbContext.TeamMembers.Update(item);
-                if (obj != null) _dbContext.SaveChanges();
+                if (obj != null) await _dbContext.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -88,14 +89,14 @@ namespace CourseTaskOOP.DAL.Repositories
             }
         }
 
-        public void Delete(TeamMember item)
+        public async Task DeleteAsync(TeamMember item)
         {
             try
             {
                 if (item == null) return;
                 var obj = _dbContext.TeamMembers.Remove(item);
                 if (obj == null) return;
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
             }
             catch (Exception e)
             {

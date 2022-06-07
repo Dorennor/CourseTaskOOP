@@ -8,16 +8,12 @@ namespace CourseTaskOOP.DAL.Data;
 
 public class TaskDbContext : DbContext
 {
-    public DbSet<Administrator> Administrators { get; set; }
-    public DbSet<Client> Clients { get; set; }
-    public DbSet<Developer> Developers { get; set; }
-    public DbSet<Manager> Managers { get; set; }
+    public DbSet<User> Users { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<Project> Projects { get; set; }
     public DbSet<WorkTask> WorkTasks { get; set; }
-    public DbSet<TeamLeader> TeamLeaders { get; set; }
-    public DbSet<TeamMember> TeamMembers { get; set; }
     public DbSet<Team> Teams { get; set; }
+    public DbSet<TeamMember> TeamMembers { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -46,10 +42,7 @@ public class TaskDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        SeedData.SeedDevelopers(modelBuilder);
-        SeedData.SeedAdministrators(modelBuilder);
-        SeedData.SeedClients(modelBuilder);
-        SeedData.SeedManager(modelBuilder);
+        SeedData.SeedUsers(modelBuilder);
     }
 
     public TaskDbContext()

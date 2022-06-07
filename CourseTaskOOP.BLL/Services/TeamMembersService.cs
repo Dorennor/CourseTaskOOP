@@ -20,45 +20,45 @@ public class TeamMembersService : IService<TeamMemberModel>
         _mapper = new Mapper(config);
     }
 
-    public List<TeamMemberModel> GetAll()
+    public async Task<List<TeamMemberModel>> GetAllAsync()
     {
-        var teamMembers = _unitOfWork.TeamMembers.GetAll();
+        var teamMembers = await _unitOfWork.TeamMembers.GetAllAsync();
         var teamMemberModels = _mapper.Map<List<TeamMember>, List<TeamMemberModel>>(teamMembers);
 
         return teamMemberModels;
     }
 
-    public TeamMemberModel GetById(int id)
+    public async Task<TeamMemberModel> GetByIdAsync(int id)
     {
-        var teamMember = _unitOfWork.TeamMembers.GetById(id);
+        var teamMember = await _unitOfWork.TeamMembers.GetByIdAsync(id);
         var teamMemberModel = _mapper.Map<TeamMember, TeamMemberModel>(teamMember);
 
         return teamMemberModel;
     }
 
-    public List<TeamMemberModel> Find(Func<TeamMemberModel, bool> predicate)
+    public async Task<List<TeamMemberModel>> FindAsync(Func<TeamMemberModel, bool> predicate)
     {
-        var teamMemberModels = _mapper.Map<List<TeamMember>, List<TeamMemberModel>>(_unitOfWork.TeamMembers.GetAll());
+        var teamMemberModels = _mapper.Map<List<TeamMember>, List<TeamMemberModel>>(await _unitOfWork.TeamMembers.GetAllAsync());
         return teamMemberModels.Where(predicate).ToList();
     }
 
-    public TeamMemberModel Create(TeamMemberModel item)
+    public async Task<TeamMemberModel> CreateAsync(TeamMemberModel item)
     {
         var teamMember = _mapper.Map<TeamMemberModel, TeamMember>(item);
-        _unitOfWork.TeamMembers.Create(teamMember);
+        await _unitOfWork.TeamMembers.CreateAsync(teamMember);
 
         return item;
     }
 
-    public void Update(TeamMemberModel item)
+    public async Task UpdateAsync(TeamMemberModel item)
     {
         var teamMember = _mapper.Map<TeamMemberModel, TeamMember>(item);
-        _unitOfWork.TeamMembers.Update(teamMember);
+        await _unitOfWork.TeamMembers.UpdateAsync(teamMember);
     }
 
-    public void Delete(TeamMemberModel item)
+    public async Task DeleteAsync(TeamMemberModel item)
     {
         var teamMember = _mapper.Map<TeamMemberModel, TeamMember>(item);
-        _unitOfWork.TeamMembers.Delete(teamMember);
+        await _unitOfWork.TeamMembers.DeleteAsync(teamMember);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CourseTaskOOP.DAL.Data;
 using CourseTaskOOP.DAL.Interfaces;
 using CourseTaskOOP.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 namespace CourseTaskOOP.DAL.Repositories;
@@ -14,11 +15,11 @@ public class TeamsRepository : IRepository<Team>
         _dbContext = dbContext;
     }
 
-    public List<Team> GetAll()
+    public async Task<List<Team>?> GetAllAsync()
     {
         try
         {
-            var obj = _dbContext.Teams.ToList();
+            var obj = await _dbContext.Teams.ToListAsync();
             return obj ?? null;
         }
         catch (Exception e)
@@ -28,13 +29,13 @@ public class TeamsRepository : IRepository<Team>
         }
     }
 
-    public Team GetById(int id)
+    public async Task<Team?> GetByIdAsync(int id)
     {
         try
         {
             if (id == null) return null;
 
-            var obj = _dbContext.Teams.FirstOrDefault(u => u.Id == id);
+            var obj = await _dbContext.Teams.FirstOrDefaultAsync(u => u.Id == id);
             return obj ?? null;
         }
         catch (Exception e)
@@ -44,7 +45,7 @@ public class TeamsRepository : IRepository<Team>
         }
     }
 
-    public List<Team> Find(Func<Team, bool> predicate)
+    public async Task<List<Team>> FindAsync(Func<Team, bool> predicate)
     {
         try
         {
@@ -58,13 +59,13 @@ public class TeamsRepository : IRepository<Team>
         }
     }
 
-    public Team Create(Team item)
+    public async Task<Team> CreateAsync(Team item)
     {
         try
         {
             if (item == null) return null;
-            var obj = _dbContext.Teams.Add(item);
-            _dbContext.SaveChanges();
+            var obj = await _dbContext.Teams.AddAsync(item);
+            await _dbContext.SaveChangesAsync();
             return obj.Entity;
         }
         catch (Exception e)
@@ -74,13 +75,13 @@ public class TeamsRepository : IRepository<Team>
         }
     }
 
-    public void Update(Team item)
+    public async Task UpdateAsync(Team item)
     {
         try
         {
             if (item == null) return;
             var obj = _dbContext.Teams.Update(item);
-            if (obj != null) _dbContext.SaveChanges();
+            if (obj != null) await _dbContext.SaveChangesAsync();
         }
         catch (Exception e)
         {
@@ -88,14 +89,14 @@ public class TeamsRepository : IRepository<Team>
         }
     }
 
-    public void Delete(Team item)
+    public async Task DeleteAsync(Team item)
     {
         try
         {
             if (item == null) return;
             var obj = _dbContext.Teams.Remove(item);
             if (obj == null) return;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
         catch (Exception e)
         {

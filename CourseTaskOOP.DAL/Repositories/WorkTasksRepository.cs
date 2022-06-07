@@ -1,6 +1,7 @@
 ﻿using CourseTaskOOP.DAL.Data;
 using CourseTaskOOP.DAL.Interfaces;
 using CourseTaskOOP.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 namespace CourseTaskOOP.DAL.Repositories;
@@ -14,11 +15,11 @@ public class WorkTasksRepository : IRepository<WorkTask>
         _dbContext = dbContext;
     }
 
-    public List<WorkTask> GetAll()
+    public async Task<List<WorkTask>?> GetAllAsync()
     {
         try
         {
-            var obj = _dbContext.WorkTasks.ToList();
+            var obj = await _dbContext.WorkTasks.ToListAsync();
             return obj ?? null;
         }
         catch (Exception e)
@@ -28,13 +29,13 @@ public class WorkTasksRepository : IRepository<WorkTask>
         }
     }
 
-    public WorkTask GetById(int id)
+    public async Task<WorkTask?> GetByIdAsync(int id)
     {
         try
         {
             if (id == null) return null;
 
-            var obj = _dbContext.WorkTasks.FirstOrDefault(u => u.Id == id);
+            var obj = await _dbContext.WorkTasks.FirstOrDefaultAsync(u => u.Id == id);
             return obj ?? null;
         }
         catch (Exception e)
@@ -44,7 +45,7 @@ public class WorkTasksRepository : IRepository<WorkTask>
         }
     }
 
-    public List<WorkTask> Find(Func<WorkTask, bool> predicate)
+    public async Task<List<WorkTask>> FindAsync(Func<WorkTask, bool> predicate)
     {
         try
         {
@@ -58,13 +59,13 @@ public class WorkTasksRepository : IRepository<WorkTask>
         }
     }
 
-    public WorkTask Create(WorkTask item)
+    public async Task<WorkTask> CreateAsync(WorkTask item)
     {
         try
         {
             if (item == null) return null;
-            var obj = _dbContext.WorkTasks.Add(item);
-            _dbContext.SaveChanges();
+            var obj = await _dbContext.WorkTasks.AddAsync(item);
+            await _dbContext.SaveChangesAsync();
             return obj.Entity;
         }
         catch (Exception e)
@@ -74,13 +75,13 @@ public class WorkTasksRepository : IRepository<WorkTask>
         }
     }
 
-    public void Update(WorkTask item)
+    public async Task UpdateAsync(WorkTask item)
     {
         try
         {
             if (item == null) return;
             var obj = _dbContext.WorkTasks.Update(item);
-            if (obj != null) _dbContext.SaveChanges();
+            if (obj != null) await _dbContext.SaveChangesAsync();
         }
         catch (Exception e)
         {
@@ -88,14 +89,14 @@ public class WorkTasksRepository : IRepository<WorkTask>
         }
     }
 
-    public void Delete(WorkTask item)
+    public async Task DeleteAsync(WorkTask item)
     {
         try
         {
             if (item == null) return;
             var obj = _dbContext.WorkTasks.Remove(item);
             if (obj == null) return;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
         catch (Exception e)
         {

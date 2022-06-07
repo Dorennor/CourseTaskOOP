@@ -20,45 +20,45 @@ public class TeamsService : IService<TeamModel>
         _mapper = new Mapper(config);
     }
 
-    public List<TeamModel> GetAll()
+    public async Task<List<TeamModel>> GetAllAsync()
     {
-        var teams = _unitOfWork.Teams.GetAll();
+        var teams = await _unitOfWork.Teams.GetAllAsync();
         var teamModels = _mapper.Map<List<Team>, List<TeamModel>>(teams);
 
         return teamModels;
     }
 
-    public TeamModel GetById(int id)
+    public async Task<TeamModel> GetByIdAsync(int id)
     {
-        var team = _unitOfWork.Teams.GetById(id);
+        var team = await _unitOfWork.Teams.GetByIdAsync(id);
         var teamModel = _mapper.Map<Team, TeamModel>(team);
 
         return teamModel;
     }
 
-    public List<TeamModel> Find(Func<TeamModel, bool> predicate)
+    public async Task<List<TeamModel>> FindAsync(Func<TeamModel, bool> predicate)
     {
-        var teamModels = _mapper.Map<List<Team>, List<TeamModel>>(_unitOfWork.Teams.GetAll());
+        var teamModels = _mapper.Map<List<Team>, List<TeamModel>>(await _unitOfWork.Teams.GetAllAsync());
         return teamModels.Where(predicate).ToList();
     }
 
-    public TeamModel Create(TeamModel item)
+    public async Task<TeamModel> CreateAsync(TeamModel item)
     {
         var team = _mapper.Map<TeamModel, Team>(item);
-        _unitOfWork.Teams.Create(team);
+        await _unitOfWork.Teams.CreateAsync(team);
 
         return item;
     }
 
-    public void Update(TeamModel item)
+    public async Task UpdateAsync(TeamModel item)
     {
         var team = _mapper.Map<TeamModel, Team>(item);
-        _unitOfWork.Teams.Update(team);
+        await _unitOfWork.Teams.UpdateAsync(team);
     }
 
-    public void Delete(TeamModel item)
+    public async Task DeleteAsync(TeamModel item)
     {
         var team = _mapper.Map<TeamModel, Team>(item);
-        _unitOfWork.Teams.Delete(team);
+        await _unitOfWork.Teams.DeleteAsync(team);
     }
 }

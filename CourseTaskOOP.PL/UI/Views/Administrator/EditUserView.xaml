@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="CourseTaskOOP.PL.UI.Views.Administrator.EditUserView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:CourseTaskOOP.PL.UI.Views.Administrator"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <Label Content="Users"
+                   HorizontalContentAlignment="Center"
+                   Width="70" />
+            <ComboBox Name="UsersComboBox"
+                      Width="500"
+                      Height="30"
+                      Margin="10">
+            </ComboBox>
+            <Label Content="Username"
+                   HorizontalContentAlignment="Center"
+                   Width="100" />
+            <TextBox Name="UserName"
+                     Width="150"
+                     Height="30"
+                     Margin="10">
+            </TextBox>
+            <Label Content="Full name"
+                   HorizontalContentAlignment="Center"
+                   Width="100" />
+            <TextBox Name="FullName"
+                     Width="150"
+                     Height="30"
+                     Margin="10">
+            </TextBox>
+            <Label Content="Password"
+                   HorizontalContentAlignment="Center"
+                   Width="70" />
+            <PasswordBox Name="Password"
+                         Width="150"
+                         Height="30"
+                         Margin="10">
+            </PasswordBox>
+            <Label Content="Role"
+                   HorizontalContentAlignment="Center"
+                   Width="70" />
+            <ComboBox Name="RolesComboBox"
+                      Width="150"
+                      Height="30"
+                      Margin="10">
+            </ComboBox>
+            <Button Name="EditUserButton"
+                    Content="Edit user"
+                    Width="70"
+                    Height="30"
+                    Margin="10"
+                    Click="EditUserButton_OnClick">
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -20,45 +20,45 @@ public class OrdersService : IService<OrderModel>
         _mapper = new Mapper(config);
     }
 
-    public List<OrderModel> GetAll()
+    public async Task<List<OrderModel>> GetAllAsync()
     {
-        var orders = _unitOfWork.Orders.GetAll();
+        var orders = await _unitOfWork.Orders.GetAllAsync();
         var orderModels = _mapper.Map<List<Order>, List<OrderModel>>(orders);
 
         return orderModels;
     }
 
-    public OrderModel GetById(int id)
+    public async Task<OrderModel> GetByIdAsync(int id)
     {
-        var order = _unitOfWork.Orders.GetById(id);
+        var order = await _unitOfWork.Orders.GetByIdAsync(id);
         var orderModel = _mapper.Map<Order, OrderModel>(order);
 
         return orderModel;
     }
 
-    public List<OrderModel> Find(Func<OrderModel, bool> predicate)
+    public async Task<List<OrderModel>> FindAsync(Func<OrderModel, bool> predicate)
     {
-        var orderModels = _mapper.Map<List<Order>, List<OrderModel>>(_unitOfWork.Orders.GetAll());
+        var orderModels = _mapper.Map<List<Order>, List<OrderModel>>(await _unitOfWork.Orders.GetAllAsync());
         return orderModels.Where(predicate).ToList();
     }
 
-    public OrderModel Create(OrderModel item)
+    public async Task<OrderModel> CreateAsync(OrderModel item)
     {
         var order = _mapper.Map<OrderModel, Order>(item);
-        _unitOfWork.Orders.Create(order);
+        await _unitOfWork.Orders.CreateAsync(order);
 
         return item;
     }
 
-    public void Update(OrderModel item)
+    public async Task UpdateAsync(OrderModel item)
     {
         var order = _mapper.Map<OrderModel, Order>(item);
-        _unitOfWork.Orders.Update(order);
+        await _unitOfWork.Orders.UpdateAsync(order);
     }
 
-    public void Delete(OrderModel item)
+    public async Task DeleteAsync(OrderModel item)
     {
         var order = _mapper.Map<OrderModel, Order>(item);
-        _unitOfWork.Orders.Delete(order);
+        await _unitOfWork.Orders.DeleteAsync(order);
     }
 }

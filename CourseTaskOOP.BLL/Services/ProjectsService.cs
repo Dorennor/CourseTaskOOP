@@ -20,45 +20,45 @@ public class ProjectsService : IService<ProjectModel>
         _mapper = new Mapper(config);
     }
 
-    public List<ProjectModel> GetAll()
+    public async Task<List<ProjectModel>> GetAllAsync()
     {
-        var projects = _unitOfWork.Projects.GetAll();
+        var projects = await _unitOfWork.Projects.GetAllAsync();
         var projectModels = _mapper.Map<List<Project>, List<ProjectModel>>(projects);
 
         return projectModels;
     }
 
-    public ProjectModel GetById(int id)
+    public async Task<ProjectModel> GetByIdAsync(int id)
     {
-        var project = _unitOfWork.Projects.GetById(id);
+        var project = await _unitOfWork.Projects.GetByIdAsync(id);
         var projectModel = _mapper.Map<Project, ProjectModel>(project);
 
         return projectModel;
     }
 
-    public List<ProjectModel> Find(Func<ProjectModel, bool> predicate)
+    public async Task<List<ProjectModel>> FindAsync(Func<ProjectModel, bool> predicate)
     {
-        var projectModels = _mapper.Map<List<Project>, List<ProjectModel>>(_unitOfWork.Projects.GetAll());
+        var projectModels = _mapper.Map<List<Project>, List<ProjectModel>>(await _unitOfWork.Projects.GetAllAsync());
         return projectModels.Where(predicate).ToList();
     }
 
-    public ProjectModel Create(ProjectModel item)
+    public async Task<ProjectModel> CreateAsync(ProjectModel item)
     {
         var project = _mapper.Map<ProjectModel, Project>(item);
-        _unitOfWork.Projects.Create(project);
+        await _unitOfWork.Projects.CreateAsync(project);
 
         return item;
     }
 
-    public void Update(ProjectModel item)
+    public async Task UpdateAsync(ProjectModel item)
     {
         var project = _mapper.Map<ProjectModel, Project>(item);
-        _unitOfWork.Projects.Update(project);
+        await _unitOfWork.Projects.UpdateAsync(project);
     }
 
-    public void Delete(ProjectModel item)
+    public async Task DeleteAsync(ProjectModel item)
     {
         var project = _mapper.Map<ProjectModel, Project>(item);
-        _unitOfWork.Projects.Delete(project);
+        await _unitOfWork.Projects.DeleteAsync(project);
     }
 }

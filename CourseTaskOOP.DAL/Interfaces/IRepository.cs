@@ -2,15 +2,15 @@
 
 public interface IRepository<T> where T : class
 {
-    List<T> GetAll();
+    Task<List<T>> GetAllAsync();
 
-    T GetById(int id);
+    Task<T> GetByIdAsync(int id);
 
-    List<T> Find(Func<T, bool> predicate);
+    Task<List<T>> FindAsync(Func<T, bool> predicate);
 
-    T Create(T item);
+    Task<T> CreateAsync(T item);
 
-    void Update(T item);
+    Task UpdateAsync(T item);
 
-    void Delete(T item);
+    Task DeleteAsync(T item);
 }

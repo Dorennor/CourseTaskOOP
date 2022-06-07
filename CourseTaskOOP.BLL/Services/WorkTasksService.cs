@@ -20,45 +20,45 @@ public class WorkTasksService : IService<WorkTaskModel>
         _mapper = new Mapper(config);
     }
 
-    public List<WorkTaskModel> GetAll()
+    public async Task<List<WorkTaskModel>> GetAllAsync()
     {
-        var workTasks = _unitOfWork.WorkTasks.GetAll();
+        var workTasks = await _unitOfWork.WorkTasks.GetAllAsync();
         var workTaskModels = _mapper.Map<List<WorkTask>, List<WorkTaskModel>>(workTasks);
 
         return workTaskModels;
     }
 
-    public WorkTaskModel GetById(int id)
+    public async Task<WorkTaskModel> GetByIdAsync(int id)
     {
-        var workTask = _unitOfWork.WorkTasks.GetById(id);
+        var workTask = await _unitOfWork.WorkTasks.GetByIdAsync(id);
         var workTaskModel = _mapper.Map<WorkTask, WorkTaskModel>(workTask);
 
         return workTaskModel;
     }
 
-    public List<WorkTaskModel> Find(Func<WorkTaskModel, bool> predicate)
+    public async Task<List<WorkTaskModel>> FindAsync(Func<WorkTaskModel, bool> predicate)
     {
-        var workTaskModels = _mapper.Map<List<WorkTask>, List<WorkTaskModel>>(_unitOfWork.WorkTasks.GetAll());
+        var workTaskModels = _mapper.Map<List<WorkTask>, List<WorkTaskModel>>(await _unitOfWork.WorkTasks.GetAllAsync());
         return workTaskModels.Where(predicate).ToList();
     }
 
-    public WorkTaskModel Create(WorkTaskModel item)
+    public async Task<WorkTaskModel> CreateAsync(WorkTaskModel item)
     {
         var workTask = _mapper.Map<WorkTaskModel, WorkTask>(item);
-        _unitOfWork.WorkTasks.Create(workTask);
+        await _unitOfWork.WorkTasks.CreateAsync(workTask);
 
         return item;
     }
 
-    public void Update(WorkTaskModel item)
+    public async Task UpdateAsync(WorkTaskModel item)
     {
         var workTask = _mapper.Map<WorkTaskModel, WorkTask>(item);
-        _unitOfWork.WorkTasks.Update(workTask);
+        await _unitOfWork.WorkTasks.UpdateAsync(workTask);
     }
 
-    public void Delete(WorkTaskModel item)
+    public async Task DeleteAsync(WorkTaskModel item)
     {
         var workTask = _mapper.Map<WorkTaskModel, WorkTask>(item);
-        _unitOfWork.WorkTasks.Delete(workTask);
+        await _unitOfWork.WorkTasks.DeleteAsync(workTask);
     }
 }

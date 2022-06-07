@@ -1,6 +1,7 @@
 ﻿using CourseTaskOOP.DAL.Data;
 using CourseTaskOOP.DAL.Interfaces;
 using CourseTaskOOP.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 namespace CourseTaskOOP.DAL.Repositories;
@@ -14,11 +15,11 @@ public class ProjectsRepository : IRepository<Project>
         _dbContext = dbContext;
     }
 
-    public List<Project> GetAll()
+    public async Task<List<Project>> GetAllAsync()
     {
         try
         {
-            var obj = _dbContext.Projects.ToList();
+            var obj = await _dbContext.Projects.ToListAsync();
             return obj ?? null;
         }
         catch (Exception e)
@@ -28,13 +29,13 @@ public class ProjectsRepository : IRepository<Project>
         }
     }
 
-    public Project GetById(int id)
+    public async Task<Project?> GetByIdAsync(int id)
     {
         try
         {
             if (id == null) return null;
 
-            var obj = _dbContext.Projects.FirstOrDefault(u => u.Id == id);
+            var obj = await _dbContext.Projects.FirstOrDefaultAsync(u => u.Id == id);
             return obj ?? null;
         }
         catch (Exception e)
@@ -44,7 +45,7 @@ public class ProjectsRepository : IRepository<Project>
         }
     }
 
-    public List<Project> Find(Func<Project, bool> predicate)
+    public async Task<List<Project>> FindAsync(Func<Project, bool> predicate)
     {
         try
         {
@@ -58,13 +59,13 @@ public class ProjectsRepository : IRepository<Project>
         }
     }
 
-    public Project Create(Project item)
+    public async Task<Project> CreateAsync(Project item)
     {
         try
         {
             if (item == null) return null;
-            var obj = _dbContext.Projects.Add(item);
-            _dbContext.SaveChanges();
+            var obj = await _dbContext.Projects.AddAsync(item);
+            await _dbContext.SaveChangesAsync();
             return obj.Entity;
         }
         catch (Exception e)
@@ -74,13 +75,13 @@ public class ProjectsRepository : IRepository<Project>
         }
     }
 
-    public void Update(Project item)
+    public async Task UpdateAsync(Project item)
     {
         try
         {
             if (item == null) return;
             var obj = _dbContext.Projects.Update(item);
-            if (obj != null) _dbContext.SaveChanges();
+            if (obj != null) await _dbContext.SaveChangesAsync();
         }
         catch (Exception e)
         {
@@ -88,14 +89,14 @@ public class ProjectsRepository : IRepository<Project>
         }
     }
 
-    public void Delete(Project item)
+    public async Task DeleteAsync(Project item)
     {
         try
         {
             if (item == null) return;
             var obj = _dbContext.Projects.Remove(item);
             if (obj == null) return;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
         catch (Exception e)
         {

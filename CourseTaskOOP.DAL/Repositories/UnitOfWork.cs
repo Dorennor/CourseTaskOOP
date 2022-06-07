@@ -8,15 +8,11 @@ public class UnitOfWork : IUnitOfWork
 {
     private bool _disposed = false;
     private readonly TaskDbContext _dbContext;
-    private IRepository<Administrator> _administrators;
-    private IRepository<Client> _clients;
-    private IRepository<Developer> _developers;
+    private IRepository<User> _clients;
     private IRepository<WorkTask> _workTasks;
-    private IRepository<TeamLeader> _teamLeaders;
     private IRepository<Team> _teams;
     private IRepository<Project> _projects;
     private IRepository<Order> _orders;
-    private IRepository<Manager> _managers;
     private IRepository<TeamMember> _teamMembers;
 
     public UnitOfWork()
@@ -24,28 +20,10 @@ public class UnitOfWork : IUnitOfWork
         _dbContext = new TaskDbContext();
     }
 
-    public IRepository<Administrator> Administrators
+    public IRepository<User> Users
     {
-        get => _administrators ??= new AdministratorsRepository(_dbContext);
-        set => _administrators = value;
-    }
-
-    public IRepository<Client> Clients
-    {
-        get => _clients ??= new ClientsRepository(_dbContext);
+        get => _clients ??= new UsersRepository(_dbContext);
         set => _clients = value;
-    }
-
-    public IRepository<Developer> Developers
-    {
-        get => _developers ??= new DevelopersRepository(_dbContext);
-        set => _developers = value;
-    }
-
-    public IRepository<Manager> Managers
-    {
-        get => _managers ??= new ManagersRepository(_dbContext);
-        set => _managers = value;
     }
 
     public IRepository<Order> Orders
@@ -66,12 +44,6 @@ public class UnitOfWork : IUnitOfWork
         set => _teams = value;
     }
 
-    public IRepository<TeamLeader> TeamLeaders
-    {
-        get => _teamLeaders ??= new TeamLeadersRepository(_dbContext);
-        set => _teamLeaders = value;
-    }
-
     public IRepository<TeamMember> TeamMembers
     {
         get => _teamMembers ??= new TeamMembersRepository(_dbContext);
@@ -84,9 +56,9 @@ public class UnitOfWork : IUnitOfWork
         set => _workTasks = value;
     }
 
-    public void Save()
+    public async Task SaveAsync()
     {
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
     }
 
     public virtual void Dispose(bool disposing)
