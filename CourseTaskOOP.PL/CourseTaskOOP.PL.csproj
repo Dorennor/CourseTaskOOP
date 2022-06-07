@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <Folder Include="UI\ViewModels\Client\" />
+    <Folder Include="UI\ViewModels\Developer\" />
     <Folder Include="UI\ViewModels\TeamLeader\" />
   </ItemGroup>
 

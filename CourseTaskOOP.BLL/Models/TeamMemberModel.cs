@@ -6,4 +6,5 @@ public class TeamMemberModel
     public int UserId { get; set; }
 
     public int TeamId { get; set; }
+    public string Position { get; set; }
 }

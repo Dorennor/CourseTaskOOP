@@ -1,13 +1,12 @@
-﻿using System;
+﻿using CourseTaskOOP.BLL.Interfaces;
+using CourseTaskOOP.BLL.Models;
+using CourseTaskOOP.BLL.Services;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using CourseTaskOOP.BLL.Interfaces;
-using CourseTaskOOP.BLL.Models;
-using CourseTaskOOP.BLL.Services;
 
 namespace CourseTaskOOP.PL.UI.Views.Administrator;
-
 
 public partial class DeleteUserView : UserControl
 {
@@ -33,5 +32,10 @@ public partial class DeleteUserView : UserControl
         });
 
         UsersComboBox.SelectedItem = null;
+
+        foreach (var user in usersService.GetAllAsync().Result)
+        {
+            UsersComboBox.Items.Add($"{user.Id} | {user.UserName} | {user.FullName} | {user.Role}");
+        }
     }
 }

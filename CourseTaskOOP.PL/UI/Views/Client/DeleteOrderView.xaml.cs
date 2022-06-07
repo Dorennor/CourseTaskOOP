@@ -20,20 +20,25 @@ public partial class DeleteOrderView : UserControl
 
         foreach (var order in ordersService.GetAllAsync().Result)
         {
-            OrdersComboBox.Items.Add($"{order.Id} | {order.Name} | {order.Deadline.Date} | {order.Type}");
+            OrdersComboBox.Items.Add($"{order.Id} | {order.Name} | {order.Deadline.ToShortDateString()} | {order.Type}");
         }
     }
 
-    private void DeleteOrderButton_OnClick(object sender, RoutedEventArgs e)
+    private async void DeleteOrderButton_OnClick(object sender, RoutedEventArgs e)
     {
-        IService<OrderModel> orderService = new OrdersService();
+        IService<OrderModel> ordersService = new OrdersService();
 
-        orderService.DeleteAsync(new OrderModel
+        await ordersService.DeleteAsync(new OrderModel
         {
             Id = Int32.Parse(OrdersComboBox.SelectedItem.ToString().Split('|').First())
         });
 
         OrdersComboBox.SelectedItem = null;
+
+        foreach (var order in ordersService.GetAllAsync().Result)
+        {
+            OrdersComboBox.Items.Add($"{order.Id} | {order.Name} | {order.Deadline.ToShortDateString()} | {order.Type}");
+        }
     }
 
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)

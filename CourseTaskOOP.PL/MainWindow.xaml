@@ -136,6 +136,42 @@
                                  Style="{StaticResource MenuButtonTheme}"
                                  Command="{Binding AddProjectViewCommand}">
                     </RadioButton>
+                    <RadioButton Content="Delete project"
+                                 Name="DeleteProjectRadioButton"
+                                 Height="50"
+                                 Margin="10"
+                                 FontSize="12"
+                                 Visibility="Collapsed"
+                                 Style="{StaticResource MenuButtonTheme}"
+                                 Command="{Binding DeleteProjectViewCommand}">
+                    </RadioButton>
+                    <RadioButton Content="Add task"
+                                 Name="AddTaskRadioButton"
+                                 Height="50"
+                                 Margin="10"
+                                 FontSize="12"
+                                 Visibility="Collapsed"
+                                 Style="{StaticResource MenuButtonTheme}"
+                                 Command="{Binding AddTaskViewCommand}">
+                    </RadioButton>
+                    <RadioButton Content="Delete task"
+                                 Name="DeleteTaskRadioButton"
+                                 Height="50"
+                                 Margin="10"
+                                 FontSize="12"
+                                 Visibility="Collapsed"
+                                 Style="{StaticResource MenuButtonTheme}"
+                                 Command="{Binding DeleteTaskViewCommand}">
+                    </RadioButton>
+                    <RadioButton Content="Get tasks"
+                                 Name="GetTasksRadioButton"
+                                 Height="50"
+                                 Margin="10"
+                                 FontSize="12"
+                                 Visibility="Collapsed"
+                                 Style="{StaticResource MenuButtonTheme}"
+                                 Command="{Binding GetTasksViewCommand}">
+                    </RadioButton>
                     <RadioButton Name="Start"
                                  Height="1"
                                  Width="1"
@@ -149,10 +185,7 @@
                 Grid.Row="1"
                 BorderThickness="1"
                 BorderBrush="Black">
-                <ContentControl Name="ContentControl"
-                                Grid.Column="1"
-                                Grid.Row="1"
-                                Margin="10"
+                <ContentControl Margin="10"
                                 Content="{Binding CurrentView}">
                 </ContentControl>
             </Border>

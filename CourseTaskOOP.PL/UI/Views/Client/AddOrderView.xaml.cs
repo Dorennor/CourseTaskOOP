@@ -1,11 +1,11 @@
-﻿using System;
+﻿using CourseTaskOOP.BLL.Interfaces;
+using CourseTaskOOP.BLL.Models;
+using CourseTaskOOP.BLL.Services;
+using System;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using CourseTaskOOP.BLL.Interfaces;
-using CourseTaskOOP.BLL.Models;
-using CourseTaskOOP.BLL.Services;
 
 namespace CourseTaskOOP.PL.UI.Views.Client;
 
@@ -24,11 +24,11 @@ public partial class AddOrderView : UserControl
         TypesComboBox.Items.Add("Testing Project");
     }
 
-    private void AddOrderButton_OnClick(object sender, RoutedEventArgs e)
+    private async void AddOrderButton_OnClick(object sender, RoutedEventArgs e)
     {
         IService<OrderModel> orderService = new OrdersService();
 
-        orderService.CreateAsync(new OrderModel
+        await orderService.CreateAsync(new OrderModel
         {
             Name = Name.Text,
             OrderDate = DateTime.Now,

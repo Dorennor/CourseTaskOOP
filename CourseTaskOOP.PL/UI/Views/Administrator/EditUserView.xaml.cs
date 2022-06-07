@@ -47,5 +47,15 @@ public partial class EditUserView : UserControl
         Password.Password = "";
         RolesComboBox.SelectedItem = null;
         UsersComboBox.SelectedItem = null;
+
+        RolesComboBox.Items.Add("Administrator");
+        RolesComboBox.Items.Add("Developer");
+        RolesComboBox.Items.Add("Manager");
+        RolesComboBox.Items.Add("Client");
+
+        foreach (var user in usersService.GetAllAsync().Result)
+        {
+            UsersComboBox.Items.Add($"{user.Id} | {user.UserName} | {user.FullName} | {user.Role}");
+        }
     }
 }

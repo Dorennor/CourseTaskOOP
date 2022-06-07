@@ -1,16 +1,18 @@
 ﻿<Application x:Class="CourseTaskOOP.PL.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:viewModels="clr-namespace:CourseTaskOOP.PL.UI.ViewModels"
              xmlns:administratorViewModels="clr-namespace:CourseTaskOOP.PL.UI.ViewModels.Administrator"
              xmlns:clientViewModels="clr-namespace:CourseTaskOOP.PL.UI.ViewModels.Client"
+             xmlns:developerViewModels="clr-namespace:CourseTaskOOP.PL.UI.ViewModels.Developer"
              xmlns:managerViewModels="clr-namespace:CourseTaskOOP.PL.UI.ViewModels.Manager"
              xmlns:teamLeaderViewModels="clr-namespace:CourseTaskOOP.PL.UI.ViewModels.TeamLeader"
+             xmlns:view="clr-namespace:CourseTaskOOP.PL.UI.Views"
              xmlns:administratorViews="clr-namespace:CourseTaskOOP.PL.UI.Views.Administrator"
              xmlns:clientViews="clr-namespace:CourseTaskOOP.PL.UI.Views.Client"
+             xmlns:developerViews="clr-namespace:CourseTaskOOP.PL.UI.Views.Developer"
              xmlns:managerViews="clr-namespace:CourseTaskOOP.PL.UI.Views.Manager"
-             xmlns:teamLeaderViews="clr-namespace:CourseTaskOOP.PL.UI.Views.TeamLeader"
-             xmlns:viewModels="clr-namespace:CourseTaskOOP.PL.UI.ViewModels"
-             xmlns:view="clr-namespace:CourseTaskOOP.PL.UI.Views">
+             xmlns:teamLeaderViews="clr-namespace:CourseTaskOOP.PL.UI.Views.TeamLeader">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -40,28 +42,13 @@
             <DataTemplate DataType="{x:Type managerViewModels:AddProjectViewModel}">
                 <managerViews:AddProjectView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type managerViewModels:EditProjectViewModel}">
-                <managerViews:EditProjectView />
-            </DataTemplate>
+
             <DataTemplate DataType="{x:Type managerViewModels:DeleteProjectViewModel}">
                 <managerViews:DeleteProject />
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type managerViewModels:AddTeamLeaderViewModel}">
-                <managerViews:AddTeamLeaderView />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type managerViewModels:DeleteTeamLeaderViewModel}">
-                <managerViews:DeleteTeamLeaderView />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type managerViewModels:AddTeamViewModel}">
-                <managerViews:AddTeamView />
-            </DataTemplate>
-
             <DataTemplate DataType="{x:Type teamLeaderViewModels:AddTaskViewModel}">
                 <teamLeaderViews:AddTaskView />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type teamLeaderViewModels:EditTaskViewModel}">
-                <teamLeaderViews:EditTaskView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type teamLeaderViewModels:DeleteTaskViewModel}">
                 <teamLeaderViews:DeleteTaskView />
@@ -69,6 +56,10 @@
 
             <DataTemplate DataType="{x:Type viewModels:StartViewModel}">
                 <view:StartView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type developerViewModels:GetTasksViewModel}">
+            <developerViews:GetTasksView />
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

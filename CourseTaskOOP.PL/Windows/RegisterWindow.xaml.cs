@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Windows;
-using CourseTaskOOP.BLL.Models;
+﻿using CourseTaskOOP.BLL.Models;
 using CourseTaskOOP.BLL.Services;
 using CourseTaskOOP.PL.Extensions;
 using CourseTaskOOP.PL.Interfaces;
 using CourseTaskOOP.PL.Services;
+using System;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Windows;
 
 namespace CourseTaskOOP.PL.Windows;
 

@@ -28,15 +28,15 @@ public partial class EditOrderView : UserControl
 
         foreach (var order in ordersService.GetAllAsync().Result)
         {
-            OrdersComboBox.Items.Add($"{order.Id} | {order.Name} | {order.Deadline.Date} | {order.Type}");
+            OrdersComboBox.Items.Add($"{order.Id} | {order.Name} | {order.Deadline.ToShortDateString()} | {order.Type}");
         }
     }
 
-    private void EditOrderButton_OnClick(object sender, RoutedEventArgs e)
+    private async void EditOrderButton_OnClick(object sender, RoutedEventArgs e)
     {
-        IService<OrderModel> orderService = new OrdersService();
+        IService<OrderModel> ordersService = new OrdersService();
 
-        orderService.UpdateAsync(new OrderModel
+        await ordersService.UpdateAsync(new OrderModel
         {
             Id = Int32.Parse(OrdersComboBox.SelectedItem.ToString().Split('|').First()),
             Name = Name.Text,
@@ -52,6 +52,11 @@ public partial class EditOrderView : UserControl
         Price.Text = "";
         TypesComboBox.SelectedItem = null;
         OrdersComboBox.SelectedItem = null;
+
+        foreach (var order in ordersService.GetAllAsync().Result)
+        {
+            OrdersComboBox.Items.Add($"{order.Id} | {order.Name} | {order.Deadline.ToShortDateString()} | {order.Type}");
+        }
     }
 
     public void NumberValidationTextBox(object sender, TextCompositionEventArgs e)

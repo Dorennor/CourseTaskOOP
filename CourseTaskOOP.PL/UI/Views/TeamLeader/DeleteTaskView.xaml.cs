@@ -1,28 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using CourseTaskOOP.BLL.Interfaces;
+using CourseTaskOOP.BLL.Models;
+using CourseTaskOOP.BLL.Services;
 
-namespace CourseTaskOOP.PL.UI.Views.TeamLeader
+namespace CourseTaskOOP.PL.UI.Views.TeamLeader;
+
+public partial class DeleteTaskView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for DeleteTaskView.xaml
-    /// </summary>
-    public partial class DeleteTaskView : UserControl
+    public DeleteTaskView()
     {
-        public DeleteTaskView()
+        InitializeComponent();
+
+        IService<WorkTaskModel> tasksService = new WorkTasksService();
+
+        foreach (var task in tasksService.GetAllAsync().Result)
         {
-            InitializeComponent();
+            TasksComboBox.Items.Add($"{task.Id} | {task.Name} | {task.Description} | {task.HoursToComplete}");
+        }
+    }
+
+    private async void DeleteTaskButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        IService<WorkTaskModel> tasksService = new WorkTasksService();
+
+        await tasksService.DeleteAsync(new WorkTaskModel
+        {
+            Id = Int32.Parse(TasksComboBox.SelectedItem.ToString().Split('|').First())
+        });
+
+        TasksComboBox.SelectedItem = null;
+
+        foreach (var task in tasksService.GetAllAsync().Result)
+        {
+            TasksComboBox.Items.Add($"{task.Id} | {task.Name} | {task.Description} | {task.HoursToComplete}");
         }
     }
 }

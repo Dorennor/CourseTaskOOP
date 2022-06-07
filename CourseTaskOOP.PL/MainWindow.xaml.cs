@@ -3,7 +3,8 @@ using CourseTaskOOP.PL.Interfaces;
 using CourseTaskOOP.PL.Services;
 using CourseTaskOOP.PL.Windows;
 using System.Windows;
-using CourseTaskOOP.PL.UI.ViewModels;
+using CourseTaskOOP.BLL.Interfaces;
+using CourseTaskOOP.BLL.Models;
 
 namespace CourseTaskOOP.PL;
 
@@ -13,6 +14,7 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         IUserManager userManagerService = new UserManagerService(new UsersService());
+        IService<TeamMemberModel> teamMembersService = new TeamMembersService();
 
         if (userManagerService.LoggedUser != null)
         {
@@ -23,26 +25,31 @@ public partial class MainWindow : Window
 
             if (userManagerService.LoggedUser.Role == "Administrator")
             {
-                ContentControl.Visibility = Visibility.Visible;
                 AddUserRadioButton.Visibility = Visibility.Visible;
                 EditUserRadioButton.Visibility = Visibility.Visible;
                 DeleteUserRadioButton.Visibility = Visibility.Visible;
             }
-            if (userManagerService.LoggedUser.Role == "TeamLeader")
+            if (teamMembersService.FindAsync(teamMember => teamMember.UserId == userManagerService.LoggedUser.Id && teamMember.Position == "TeamLeader").Result.Count > 0)
             {
-                ContentControl.Visibility = Visibility.Visible;
+                AddTaskRadioButton.Visibility = Visibility.Visible;
+                DeleteTaskRadioButton.Visibility = Visibility.Visible;
             }
             if (userManagerService.LoggedUser.Role == "Manager")
             {
-                ContentControl.Visibility = Visibility.Visible;
                 AddProjectRadioButton.Visibility = Visibility.Visible;
+                DeleteProjectRadioButton.Visibility = Visibility.Visible;
             }
             if (userManagerService.LoggedUser.Role == "Client")
             {
-                ContentControl.Visibility = Visibility.Visible;
                 AddOrderRadioButton.Visibility = Visibility.Visible;
                 EditOrderRadioButton.Visibility = Visibility.Visible;
                 DeleteOrderRadioButton.Visibility = Visibility.Visible;
+            }
+            if (userManagerService.LoggedUser.Role == "Developer")
+            {
+                GetTasksRadioButton.Visibility = Visibility.Visible;
+                AddTaskRadioButton.Visibility = Visibility.Collapsed;
+                DeleteTaskRadioButton.Visibility = Visibility.Collapsed;
             }
         }
     }
@@ -56,7 +63,7 @@ public partial class MainWindow : Window
     public void ProcessCallBack()
     {
         IUserManager userManagerService = new UserManagerService(new UsersService());
-
+        IService<TeamMemberModel> teamMembersService = new TeamMembersService();
         if (userManagerService.LoggedUser == null)
         {
             MessageBox.Show("Wrong password or login!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -70,26 +77,31 @@ public partial class MainWindow : Window
 
         if (userManagerService.LoggedUser.Role == "Administrator")
         {
-            ContentControl.Visibility = Visibility.Visible;
             AddUserRadioButton.Visibility = Visibility.Visible;
             EditUserRadioButton.Visibility = Visibility.Visible;
             DeleteUserRadioButton.Visibility = Visibility.Visible;
         }
-        if (userManagerService.LoggedUser.Role == "TeamLeader")
+        if (teamMembersService.FindAsync(teamMember => teamMember.UserId == userManagerService.LoggedUser.Id && teamMember.Position == "TeamLeader").Result.Count > 0)
         {
-            ContentControl.Visibility = Visibility.Visible;
+            AddTaskRadioButton.Visibility = Visibility.Visible;
+            DeleteTaskRadioButton.Visibility = Visibility.Visible;
         }
         if (userManagerService.LoggedUser.Role == "Manager")
         {
-            ContentControl.Visibility = Visibility.Visible;
             AddProjectRadioButton.Visibility = Visibility.Visible;
+            DeleteProjectRadioButton.Visibility = Visibility.Visible;
         }
         if (userManagerService.LoggedUser.Role == "Client")
         {
-            ContentControl.Visibility = Visibility.Visible;
             AddOrderRadioButton.Visibility = Visibility.Visible;
             EditOrderRadioButton.Visibility = Visibility.Visible;
             DeleteOrderRadioButton.Visibility = Visibility.Visible;
+        }
+        if (userManagerService.LoggedUser.Role == "Developer")
+        {
+            GetTasksRadioButton.Visibility = Visibility.Visible;
+            AddTaskRadioButton.Visibility = Visibility.Collapsed;
+            DeleteTaskRadioButton.Visibility = Visibility.Collapsed;
         }
     }
 
@@ -116,7 +128,11 @@ public partial class MainWindow : Window
             EditOrderRadioButton.Visibility = Visibility.Collapsed;
             DeleteOrderRadioButton.Visibility = Visibility.Collapsed;
             AddProjectRadioButton.Visibility = Visibility.Collapsed;
-            ContentControl.Visibility = Visibility.Collapsed;
+            DeleteProjectRadioButton.Visibility = Visibility.Collapsed;
+            AddTaskRadioButton.Visibility = Visibility.Collapsed;
+            DeleteTaskRadioButton.Visibility = Visibility.Collapsed;
+            GetTasksRadioButton.Visibility = Visibility.Collapsed;
+
             Start.Command.Execute(null);
         }
     }
