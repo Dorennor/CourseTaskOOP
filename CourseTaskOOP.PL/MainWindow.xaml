@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:CourseTaskOOP.PL.UI.ViewModels"
         mc:Ignorable="d"
-        Height="600" Width="920"
+        Height="700" Width="1000"
         ResizeMode="NoResize"
         Background="White">
 
@@ -127,6 +127,21 @@
                                  Style="{StaticResource MenuButtonTheme}"
                                  Command="{Binding DeleteOrderViewCommand}">
                     </RadioButton>
+                    <RadioButton Content="Add project"
+                                 Name="AddProjectRadioButton"
+                                 Height="50"
+                                 Margin="10"
+                                 FontSize="14"
+                                 Visibility="Collapsed"
+                                 Style="{StaticResource MenuButtonTheme}"
+                                 Command="{Binding AddProjectViewCommand}">
+                    </RadioButton>
+                    <RadioButton Name="Start"
+                                 Height="1"
+                                 Width="1"
+                                 Visibility="Visible"
+                                 Command="{Binding StartViewCommand}">
+                    </RadioButton>
                 </StackPanel>
             </Border>
 
@@ -134,10 +149,11 @@
                 Grid.Row="1"
                 BorderThickness="1"
                 BorderBrush="Black">
-                <ContentControl Grid.Column="1"
-                            Grid.Row="1"
-                            Margin="10"
-                            Content="{Binding CurrentView}">
+                <ContentControl Name="ContentControl"
+                                Grid.Column="1"
+                                Grid.Row="1"
+                                Margin="10"
+                                Content="{Binding CurrentView}">
                 </ContentControl>
             </Border>
         </Grid>

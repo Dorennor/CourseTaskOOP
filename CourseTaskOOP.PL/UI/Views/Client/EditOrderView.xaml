@@ -6,6 +6,63 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <StackPanel Orientation="Vertical">
+            <Label Content="Orders"
+                   HorizontalContentAlignment="Center"
+                   Width="70" />
+            <ComboBox Name="OrdersComboBox"
+                      Width="500"
+                      Height="30"
+                      Margin="10">
+            </ComboBox>
+            <Label Content="Name"
+                   HorizontalContentAlignment="Center"
+                   Width="100" />
+            <TextBox Name="Name"
+                     Width="150"
+                     Height="30"
+                     Margin="10">
+            </TextBox>
+            <Label Content="Deadline"
+                   HorizontalContentAlignment="Center"
+                   Width="100" />
+            <DatePicker Name="Deadline"
+                        Width="150"
+                        Height="30"
+                        Margin="10">
+            </DatePicker>
+            <Label Content="Price"
+                   HorizontalContentAlignment="Center"
+                   Width="100" />
+            <TextBox Name="Price"
+                     Width="150"
+                     Height="30"
+                     Margin="10"
+                     PreviewTextInput="NumberValidationTextBox">
+            </TextBox>
+            <Label Content="Description"
+                   HorizontalContentAlignment="Center"
+                   Width="100" />
+            <TextBox Name="Description"
+                     Width="150"
+                     Height="30"
+                     Margin="10">
+            </TextBox>
+            <Label Content="Type"
+                   HorizontalContentAlignment="Center"
+                   Width="100" />
+            <ComboBox Name="TypesComboBox"
+                      Width="150"
+                      Height="30"
+                      Margin="10">
+            </ComboBox>
+            <Button Name="EditOrderButton"
+                    Content="Edit order"
+                    Width="150"
+                    Height="30"
+                    Margin="10"
+                    Click="EditOrderButton_OnClick">
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>

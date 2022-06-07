@@ -6,6 +6,22 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <StackPanel Orientation="Vertical">
+            <Label Content="Orders"
+                   HorizontalContentAlignment="Center"
+                   Width="70" />
+            <ComboBox Name="OrdersComboBox"
+                      Width="500"
+                      Height="30"
+                      Margin="10">
+            </ComboBox>
+            <Button Name="DeleteOrderButton"
+                    Content="Delete order"
+                    Width="150"
+                    Height="30"
+                    Margin="10"
+                    Click="DeleteOrderButton_OnClick">
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>
