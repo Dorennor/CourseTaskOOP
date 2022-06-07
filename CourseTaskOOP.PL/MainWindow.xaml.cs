@@ -45,11 +45,9 @@ public partial class MainWindow : Window
                 EditOrderRadioButton.Visibility = Visibility.Visible;
                 DeleteOrderRadioButton.Visibility = Visibility.Visible;
             }
-            if (userManagerService.LoggedUser.Role == "Developer")
+            if (userManagerService.LoggedUser.Role == "Developer" && teamMembersService.FindAsync(teamMember => teamMember.UserId == userManagerService.LoggedUser.Id && teamMember.Position == "TeamLeader").Result.Count == 0)
             {
                 GetTasksRadioButton.Visibility = Visibility.Visible;
-                AddTaskRadioButton.Visibility = Visibility.Collapsed;
-                DeleteTaskRadioButton.Visibility = Visibility.Collapsed;
             }
         }
     }
@@ -97,11 +95,9 @@ public partial class MainWindow : Window
             EditOrderRadioButton.Visibility = Visibility.Visible;
             DeleteOrderRadioButton.Visibility = Visibility.Visible;
         }
-        if (userManagerService.LoggedUser.Role == "Developer")
+        if (userManagerService.LoggedUser.Role == "Developer" && teamMembersService.FindAsync(teamMember => teamMember.UserId == userManagerService.LoggedUser.Id && teamMember.Position == "TeamLeader").Result.Count == 0)
         {
             GetTasksRadioButton.Visibility = Visibility.Visible;
-            AddTaskRadioButton.Visibility = Visibility.Collapsed;
-            DeleteTaskRadioButton.Visibility = Visibility.Collapsed;
         }
     }
 
